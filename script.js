@@ -5,7 +5,8 @@ const api_url = "https://api.quotable.io/random";
 async function getquote(url) {
   try {
     // Display loading while fetching quotes
-    quote.innerHTML = "Loading...";
+    quote.innerHTML = "";
+    quote.classList.add("dots-2");
     author.innerHTML = "Loading...";
 
     const response = await fetch(url);
@@ -15,6 +16,7 @@ async function getquote(url) {
 
     //Data handing
     const data = await response.json();
+    if (data.content) quote.classList.remove("dots-2");
     quote.innerHTML = data.content;
     author.innerHTML = data.author;
   } catch (error) {
