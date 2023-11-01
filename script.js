@@ -3,20 +3,35 @@ const author = document.getElementById("author");
 const api_url = "https://api.quotable.io/random";
 
 async function getquote(url) {
-  const response = await fetch(url);
-  var data = await response.json();
-  // console.log(data);
+  try {
+    // Display loading while fetching quotes
+    quote.innerHTML = "Loading...";
+    author.innerHTML = "Loading...";
 
-  quote.innerHTML = data.content;
-  author.innerHTML = data.author;
+    const response = await fetch(url);
+
+    //Error handling
+    if (!response.ok) throw new Error();
+
+    //Data handing
+    const data = await response.json();
+    quote.innerHTML = data.content;
+    author.innerHTML = data.author;
+  } catch (error) {
+    quote.innerHTML = "Error fetching quote, please try again!";
+    author.innerHTML = "Error";
+  }
 }
 
 function tweet() {
   window.open(
-    "https://twitter.com/intent/tweet?text=" + '"' +
-      quote.innerHTML + '"' +
-      " ---- by: " + author.innerHTML,
+    "https://twitter.com/intent/tweet?text=" +
+      '"' +
+      quote.innerHTML +
+      '"' +
+      " -- by: " +
+      author.innerHTML,
     "Tweet Window",
-    "width=600, height=300"
+    "width=600, height=400"
   );
 }
