@@ -22,6 +22,7 @@ async function getquote(url) {
   } catch (error) {
     quote.innerHTML = "Error fetching quote, please try again!";
     author.innerHTML = "Error";
+    quote.classList.remove("dots-2");
   }
 }
 
